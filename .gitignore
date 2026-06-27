@@ -1,0 +1,23 @@
+# Database files
+*.db
+backend/vault.db
+test_vault.db
+test_agent_vault.db
+
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment configurations
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# IDEs and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

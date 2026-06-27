@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardian — Privacy-First Concierge & Data Vault</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background glow shapes for glassmorphism -->
+    <div class="glow-bg-1"></div>
+    <div class="glow-bg-2"></div>
+
+    <div class="app-container">
+        <!-- Top Navigation -->
+        <header class="app-header">
+            <div class="header-logo">
+                <div class="logo-icon"><i data-lucide="shield-check"></i></div>
+                <div class="logo-text">
+                    <h1>GUARDIAN</h1>
+                    <span>Privacy-First Concierge</span>
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <div class="vault-status locked" id="vaultStatus">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Vault Locked</span>
+                </div>
+                
+                <div class="passphrase-container">
+                    <i data-lucide="key" class="key-icon"></i>
+                    <input type="password" id="passphraseInput" placeholder="Enter Vault Passphrase..." value="guardian-default-passphrase">
+                    <button id="unlockBtn" class="premium-btn">Unlock</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Workspace Grid -->
+        <main class="workspace-grid">
+            
+            <!-- Left Column: Agent Chat Console -->
+            <section class="grid-card chat-console">
+                <div class="card-header">
+                    <div class="header-title">
+                        <i data-lucide="bot"></i>
+                        <h2>Concierge Console</h2>
+                    </div>
+                    <span class="badge online">Active</span>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message system-msg">
+                        <div class="msg-icon"><i data-lucide="info"></i></div>
+                        <div class="msg-content">
+                            Welcome to **Guardian**. Enter a passphrase above to initialize your local encrypted SQLite vault, then chat with the agent to securely add notes, tasks, and contacts.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-input-area">
+                    <form id="chatForm">
+                        <input type="text" id="userInput" placeholder="Ask Guardian to add notes, list tasks, find contacts..." autocomplete="off" disabled>
+                        <button type="submit" id="sendBtn" class="send-btn" disabled><i data-lucide="send"></i></button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Middle Column: Vault Data Visualizer -->
+            <section class="grid-card vault-visualizer">
+                <div class="card-header">
+                    <div class="header-title">
+                        <i data-lucide="database"></i>
+                        <h2>Secure Vault State</h2>
+                    </div>
+                    <div class="db-size" id="dbSize">Size: 0 KB</div>
+                </div>
+
+                <!-- Stats Overview Widgets -->
+                <div class="stats-grid">
+                    <div class="stat-widget" id="statNotes">
+                        <div class="stat-icon notes-color"><i data-lucide="file-text"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-count">0</span>
+                            <span class="stat-label">Notes</span>
+                        </div>
+                    </div>
+                    <div class="stat-widget" id="statTasks">
+                        <div class="stat-icon tasks-color"><i data-lucide="check-square"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-count">0</span>
+                            <span class="stat-label">Pending Tasks</span>
+                        </div>
+                    </div>
+                    <div class="stat-widget" id="statContacts">
+                        <div class="stat-icon contacts-color"><i data-lucide="users"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-count">0</span>
+                            <span class="stat-label">Contacts</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabbed Data Lists -->
+                <div class="vault-tabs">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" data-tab="notes"><i data-lucide="file-text"></i> Notes</button>
+                        <button class="tab-btn" data-tab="tasks"><i data-lucide="check-square"></i> Tasks</button>
+                        <button class="tab-btn" data-tab="contacts"><i data-lucide="users"></i> Contacts</button>
+                    </div>
+
+                    <div class="tab-contentactive active" id="tabContent">
+                        <!-- Dynamic contents go here -->
+                        <div class="empty-state">
+                            <i data-lucide="lock"></i>
+                            <p>Unlock the vault to view secure records</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Column: Security Guard monitor -->
+            <section class="grid-card security-guard">
+                <div class="card-header">
+                    <div class="header-title">
+                        <i data-lucide="shield"></i>
+                        <h2>Security Guard</h2>
+                    </div>
+                    <button class="clear-btn" id="clearLogsBtn"><i data-lucide="trash-2"></i> Clear</button>
+                </div>
+                
+                <div class="guard-header-stats">
+                    <div class="shield-graphic">
+                        <div class="pulse-ring"></div>
+                        <i data-lucide="lock-keyhole"></i>
+                    </div>
+                    <div class="shield-desc">
+                        <h3>Local AES-256 Enabled</h3>
+                        <p>PII is automatically redacted before LLM upload.</p>
+                    </div>
+                </div>
+
+                <div class="security-logs" id="securityLogs">
+                    <div class="log-entry system-log">
+                        <span class="log-time">System</span>
+                        <p>Privacy-First local sanitization agent is online.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- App Scripts -->
+    <script src="app.js"></script>
+    <script>
+        // Initialize lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>

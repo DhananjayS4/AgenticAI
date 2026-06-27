@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  guardian-app:
+    build: .
+    container_name: guardian-app
+    ports:
+      - "8000:8000"
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    volumes:
+      - ./backend/vault.db:/app/backend/vault.db
+    restart: unless-stopped
