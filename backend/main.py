@@ -6,6 +6,12 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Header, HTTPExcepti
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+load_dotenv(os.path.join(os.path.dirname(__file__), "..env"))
+load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 
 from database import DatabaseManager
 from agents.sanitizer import SanitizerAgent
